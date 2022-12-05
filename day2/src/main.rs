@@ -17,17 +17,16 @@ fn main() {
     let spl = inp.split('\n');
 
     if args[1] == "partone" {
-        calculate(spl);
+        calculate(spl, new_part_one_map());
     } else if args[1] == "parttwo" {
-        calculate(spl);
+        calculate(spl, new_part_two_map());
     } else {
         panic!("unknown arg {}", args[1]);
     }
 }
 
-fn calculate(spl: Split<char>) {
+fn calculate(spl: Split<char>, point_val_map: HashMap<String, Play>) {
     let mut score = 0;
-    let point_val_map = new_point_val_map();
 
     let mut i = 0;
     for val in spl {
@@ -49,10 +48,20 @@ type Play = HashMap<String, i32>;
 
 // These values represent the opponent's play (A, B, C) and the points garnered for each possible
 // strategy-guide proposed counter play
-fn new_point_val_map() -> HashMap<String, Play> {
+fn new_part_one_map() -> HashMap<String, Play> {
     return HashMap::from([
                               (String::from("A"), HashMap::from([(String::from("X"), (3+1)), (String::from("Y"), (6+2)), (String::from("Z"), (0+3))])),
                               (String::from("B"), HashMap::from([(String::from("X"), (0+1)), (String::from("Y"), (3+2)), (String::from("Z"), (6+3))])),
                               (String::from("C"), HashMap::from([(String::from("X"), (6+1)), (String::from("Y"), (0+2)), (String::from("Z"), (3+3))])),
+    ]);
+}
+
+// These values represent the opponent's play (A, B, C) and the points garnered for each possible
+// strategy-guide proposed desired outcome
+fn new_part_two_map() -> HashMap<String, Play> {
+    return HashMap::from([
+                              (String::from("A"), HashMap::from([(String::from("X"), (3+0)), (String::from("Y"), (1+3)), (String::from("Z"), (2+6))])),
+                              (String::from("B"), HashMap::from([(String::from("X"), (1+0)), (String::from("Y"), (2+3)), (String::from("Z"), (3+6))])),
+                              (String::from("C"), HashMap::from([(String::from("X"), (2+0)), (String::from("Y"), (3+3)), (String::from("Z"), (1+6))])),
     ]);
 }
